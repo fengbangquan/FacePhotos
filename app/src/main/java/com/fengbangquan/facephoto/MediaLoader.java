@@ -66,6 +66,7 @@ public class MediaLoader extends AsyncTaskLoader<List<MediaItem>> {
         super(context);
         MEDIA_TYPE = mediaType;
         mContext = context;
+        onContentChanged();
     }
 
     private List<MediaItem> scanImage() {
@@ -169,8 +170,15 @@ public class MediaLoader extends AsyncTaskLoader<List<MediaItem>> {
 
     @Override
     protected void onStartLoading() {
-        forceLoad();
+        if (takeContentChanged()) {
+            forceLoad();
+        }
         registerContentObserver();
+    }
+
+    @Override
+    protected void onStopLoading() {
+        cancelLoad();
     }
 
     @Override
