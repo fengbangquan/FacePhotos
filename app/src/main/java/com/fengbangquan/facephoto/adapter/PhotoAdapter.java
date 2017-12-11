@@ -34,10 +34,10 @@ public class PhotoAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
 
         Glide
-                .with(mContext)
-                .load(mMediaItemList.get(position).getUriString())
-                .apply(RequestOptions.placeholderOf(R.drawable.empty_photo))
-                .into(((ImageViewHolder) holder).imageView);
+            .with(mContext)
+            .load(mMediaItemList.get(position).getUriString())
+            .apply(RequestOptions.placeholderOf(R.drawable.empty_photo))
+            .into(((ImageViewHolder) holder).imageView);
     }
 
     @Override
