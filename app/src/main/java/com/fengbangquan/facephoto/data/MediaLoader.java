@@ -1,4 +1,4 @@
-package com.fengbangquan.facephoto;
+package com.fengbangquan.facephoto.data;
 
 import android.content.AsyncTaskLoader;
 import android.content.ContentResolver;
@@ -62,7 +62,7 @@ public class MediaLoader extends AsyncTaskLoader<List<MediaItem>> {
             MediaStore.Video.Media.DURATION
     };
 
-     MediaLoader(Context context, int mediaType) {
+     public MediaLoader(Context context, int mediaType) {
         super(context);
         MEDIA_TYPE = mediaType;
         mContext = context;

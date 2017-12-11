@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">FacePhoto</string>
+    <item name="main_loader" type="id"/>
 </resources>

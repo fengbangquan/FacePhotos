@@ -1,4 +1,4 @@
-package com.fengbangquan.facephoto;
+package com.fengbangquan.facephoto.data;
 
 
 import android.os.Parcel;
