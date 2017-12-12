@@ -5,6 +5,8 @@ import android.app.LoaderManager;
 import android.content.Loader;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+
+import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -51,6 +53,8 @@ public class PhotoFragment extends Fragment implements LoaderManager.LoaderCallb
 
     @Override
     public void onLoadFinished(Loader<List<MediaItem>> loader, List<MediaItem> data) {
+        GridLayoutManager layoutManager = new GridLayoutManager(getContext(), 3);
+        mRecyclerView.setLayoutManager(layoutManager);
         mItemsList = data;
         mPhotoAdapter = new PhotoAdapter(getContext(), mItemsList);
         mRecyclerView.setAdapter(mPhotoAdapter);
