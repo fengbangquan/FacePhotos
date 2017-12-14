@@ -44,7 +44,7 @@ public class PhotoPagerAdapter extends PagerAdapter {
     public Object instantiateItem(ViewGroup container, int position) {
         LayoutInflater inflater = LayoutInflater.from(mConText);
         View view = inflater.inflate(R.layout.view_pager_photo, null);
-        ImageView imageView = view.findViewById(R.id.view_pager_item);
+        ImageView imageView = view.findViewById(R.id.item_view_pager);
         Glide
             .with(mConText)
             .load(mMediaItemList.get(position).getUriString())

@@ -13,7 +13,7 @@ import com.fengbangquan.facephoto.data.MediaItem;
 import java.util.List;
 
 /**
- * created by Feng Bangquan on 17-12-12
+ * Created by Feng Bangquan on 17-12-12
  */
 public class PhotoPagerFragment extends Fragment {
 
