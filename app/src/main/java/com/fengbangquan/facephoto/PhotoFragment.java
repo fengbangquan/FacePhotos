@@ -11,6 +11,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import com.fengbangquan.facephoto.adapter.PhotoAdapter;
 import com.fengbangquan.facephoto.data.MediaItem;
@@ -21,7 +22,8 @@ import java.util.List;
 /**
  * Created by Feng Bangquan on 17-12-11
  */
-public class PhotoFragment extends Fragment implements LoaderManager.LoaderCallbacks<List<MediaItem>>{
+public class PhotoFragment extends Fragment implements LoaderManager.LoaderCallbacks<List<MediaItem>>,
+    PhotoAdapter.ItemOnClickListener {
 
     private List<MediaItem> mItemsList;
     private RecyclerView mRecyclerView;
@@ -58,10 +60,21 @@ public class PhotoFragment extends Fragment implements LoaderManager.LoaderCallb
         mItemsList = data;
         mPhotoAdapter = new PhotoAdapter(getContext(), mItemsList);
         mRecyclerView.setAdapter(mPhotoAdapter);
+        mPhotoAdapter.setItemOnClickListener(this);
     }
 
     @Override
     public void onLoaderReset(Loader<List<MediaItem>> loader) {
+
+    }
+
+    @Override
+    public void onItemClick(View view, int position) {
+        Toast.makeText(getContext(), "position is :" + position, Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void onItemLongClick(View view, int position) {
 
     }
 }

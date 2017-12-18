@@ -5,6 +5,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ImageView;
 
 import com.bumptech.glide.Glide;
@@ -17,12 +18,29 @@ import java.util.List;
 /**
  * created by Feng Bangquan on 17-12-11
  */
-public class PhotoAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
+public class PhotoAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> implements
+        View.OnClickListener{
     public List<MediaItem> mMediaItemList;
+    public ItemOnClickListener mItemOnClickListener;
     private Context mContext;
+
     public PhotoAdapter(Context context, List<MediaItem> mediaItemList) {
         mContext = context;
         mMediaItemList = mediaItemList;
+    }
+
+    public interface ItemOnClickListener {
+        void onItemClick(View view, int position);
+        void onItemLongClick(View view, int position);
+    }
+
+    public void setItemOnClickListener(ItemOnClickListener itemOnClickListener) {
+        mItemOnClickListener = itemOnClickListener;
+    }
+
+    @Override
+    public void onClick(View v) {
+        mItemOnClickListener.onItemClick(v, (int)v.getTag());
     }
 
     @Override
@@ -32,12 +50,14 @@ public class PhotoAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
 
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
-
+        ImageView imageView = ((ImageViewHolder) holder).imageView;
         Glide
             .with(mContext)
             .load(mMediaItemList.get(position).getUriString())
             .apply(RequestOptions.placeholderOf(R.drawable.empty_photo))
-            .into(((ImageViewHolder) holder).imageView);
+            .into(imageView);
+        imageView.setOnClickListener(this);
+        imageView.setTag(position);
     }
 
     @Override
