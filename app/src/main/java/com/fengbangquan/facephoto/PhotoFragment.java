@@ -23,7 +23,7 @@ import java.util.List;
  * Created by Feng Bangquan on 17-12-11
  */
 public class PhotoFragment extends Fragment implements LoaderManager.LoaderCallbacks<List<MediaItem>>,
-    PhotoAdapter.ItemOnClickListener {
+        PhotoAdapter.OnItemClickListener, PhotoAdapter.OnItemLongClickListener {
 
     private List<MediaItem> mItemsList;
     private RecyclerView mRecyclerView;
@@ -60,7 +60,8 @@ public class PhotoFragment extends Fragment implements LoaderManager.LoaderCallb
         mItemsList = data;
         mPhotoAdapter = new PhotoAdapter(getContext(), mItemsList);
         mRecyclerView.setAdapter(mPhotoAdapter);
-        mPhotoAdapter.setItemOnClickListener(this);
+        mPhotoAdapter.setOnItemClickListener(this);
+        mPhotoAdapter.setOnItemLongClickListener(this);
     }
 
     @Override
@@ -69,8 +70,12 @@ public class PhotoFragment extends Fragment implements LoaderManager.LoaderCallb
     }
 
     @Override
-    public void onItemClick(View view, int position) {
-        Toast.makeText(getContext(), "position is :" + position, Toast.LENGTH_SHORT).show();
+    public void onItemClick(View view, int position, String uriString) {
+
     }
 
+    @Override
+    public void onItemLongClickListener(View view, int position, String uriString) {
+
+    }
 }

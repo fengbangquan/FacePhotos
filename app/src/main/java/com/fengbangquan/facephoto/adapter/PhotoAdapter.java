@@ -5,7 +5,6 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
 import android.widget.ImageView;
 
 import com.bumptech.glide.Glide;
@@ -18,10 +17,10 @@ import java.util.List;
 /**
  * created by Feng Bangquan on 17-12-11
  */
-public class PhotoAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> implements
-        View.OnClickListener{
+public class PhotoAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     public List<MediaItem> mMediaItemList;
-    public ItemOnClickListener mItemOnClickListener;
+    private OnItemClickListener mOnItemClickListener;
+    private OnItemLongClickListener mOnItemLongClickListener;
     private Context mContext;
 
     public PhotoAdapter(Context context, List<MediaItem> mediaItemList) {
@@ -29,17 +28,20 @@ public class PhotoAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
         mMediaItemList = mediaItemList;
     }
 
-    public interface ItemOnClickListener {
-        void onItemClick(View view, int position);
+    public interface OnItemClickListener {
+        void onItemClick(View view, int position, String uriString);
     }
 
-    public void setItemOnClickListener(ItemOnClickListener itemOnClickListener) {
-        mItemOnClickListener = itemOnClickListener;
+    public interface OnItemLongClickListener {
+        void onItemLongClickListener(View view, int position, String uriString);
     }
 
-    @Override
-    public void onClick(View v) {
-        mItemOnClickListener.onItemClick(v, (int)v.getTag());
+    public void setOnItemClickListener(OnItemClickListener onItemClickListener) {
+        mOnItemClickListener = onItemClickListener;
+    }
+
+    public void setOnItemLongClickListener(OnItemLongClickListener onItemLongClickListener) {
+        mOnItemLongClickListener = onItemLongClickListener;
     }
 
     @Override
@@ -48,15 +50,27 @@ public class PhotoAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
     }
 
     @Override
-    public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
+    public void onBindViewHolder(RecyclerView.ViewHolder holder, final int position) {
         ImageView imageView = ((ImageViewHolder) holder).imageView;
+        final String uriString = mMediaItemList.get(position).getUriString();
         Glide
             .with(mContext)
-            .load(mMediaItemList.get(position).getUriString())
+            .load(uriString)
             .apply(RequestOptions.placeholderOf(R.drawable.empty_photo))
             .into(imageView);
-        imageView.setOnClickListener(this);
-        imageView.setTag(position);
+        imageView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mOnItemClickListener.onItemClick(v, position, uriString);
+            }
+        });
+        imageView.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View v) {
+                mOnItemLongClickListener.onItemLongClickListener(v, position, uriString);
+                return true;
+            }
+        });
     }
 
     @Override
