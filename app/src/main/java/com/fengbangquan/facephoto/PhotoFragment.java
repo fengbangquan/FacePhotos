@@ -73,8 +73,4 @@ public class PhotoFragment extends Fragment implements LoaderManager.LoaderCallb
         Toast.makeText(getContext(), "position is :" + position, Toast.LENGTH_SHORT).show();
     }
 
-    @Override
-    public void onItemLongClick(View view, int position) {
-
-    }
 }

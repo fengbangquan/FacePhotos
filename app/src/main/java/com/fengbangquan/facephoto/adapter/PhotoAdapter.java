@@ -31,7 +31,6 @@ public class PhotoAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
 
     public interface ItemOnClickListener {
         void onItemClick(View view, int position);
-        void onItemLongClick(View view, int position);
     }
 
     public void setItemOnClickListener(ItemOnClickListener itemOnClickListener) {
