@@ -50,8 +50,9 @@ public class PhotoAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
     }
 
     @Override
-    public void onBindViewHolder(RecyclerView.ViewHolder holder, final int position) {
+    public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
         ImageView imageView = ((ImageViewHolder) holder).imageView;
+        final int itemPosition = position;
         final String uriString = mMediaItemList.get(position).getUriString();
         Glide
             .with(mContext)
@@ -61,13 +62,13 @@ public class PhotoAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
         imageView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                mOnItemClickListener.onItemClick(v, position, uriString);
+                mOnItemClickListener.onItemClick(v, itemPosition, uriString);
             }
         });
         imageView.setOnLongClickListener(new View.OnLongClickListener() {
             @Override
             public boolean onLongClick(View v) {
-                mOnItemLongClickListener.onItemLongClickListener(v, position, uriString);
+                mOnItemLongClickListener.onItemLongClickListener(v, itemPosition, uriString);
                 return true;
             }
         });
