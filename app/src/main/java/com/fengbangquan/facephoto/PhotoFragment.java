@@ -48,6 +48,13 @@ public class PhotoFragment extends Fragment implements LoaderManager.LoaderCallb
         super.onViewCreated(view, savedInstanceState);
     }
 
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        mItemsList.clear();
+    }
+
     @Override
     public Loader<List<MediaItem>> onCreateLoader(int id, Bundle args) {
         return new MediaLoader(getContext(), MediaLoader.IMAGE_AND_VIDEO);
