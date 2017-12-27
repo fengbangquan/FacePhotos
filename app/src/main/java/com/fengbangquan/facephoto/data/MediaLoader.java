@@ -65,7 +65,7 @@ public class MediaLoader extends AsyncTaskLoader<List<MediaItem>> {
      public MediaLoader(Context context, int mediaType) {
         super(context);
         MEDIA_TYPE = mediaType;
-        mContext = context;
+        mContext = context.getApplicationContext();
         onContentChanged();
     }
 
