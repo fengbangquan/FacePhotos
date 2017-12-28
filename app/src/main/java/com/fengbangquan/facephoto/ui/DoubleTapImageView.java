@@ -9,7 +9,7 @@ import android.widget.ImageView;
 /**
  * Created by Feng Bangquan on 17-12-28
  */
-public class DoubleTapImageView extends ImageView implements View.OnTouchListener {
+public class DoubleTapImageView extends ImageView  {
     long startTime;
     long endTime;
     public DoubleTapImageView(Context context) {
@@ -28,18 +28,5 @@ public class DoubleTapImageView extends ImageView implements View.OnTouchListene
         super(context, attrs, defStyleAttr, defStyleRes);
     }
 
-    @Override
-    public boolean onTouch(View v, MotionEvent event) {
-        switch (event.getAction()) {
-            case MotionEvent.ACTION_DOWN:
-                endTime = startTime;
-                startTime = System.currentTimeMillis();
-                if ((endTime - startTime) < 300) {
-                    return true;
-                }
-                default:
-                    break;
-        }
-        return false;
-    }
+
 }
