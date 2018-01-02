@@ -11,7 +11,6 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
 
 import com.fengbangquan.facephoto.adapter.PhotoAdapter;
 import com.fengbangquan.facephoto.data.MediaItem;
@@ -28,6 +27,15 @@ public class PhotoFragment extends Fragment implements LoaderManager.LoaderCallb
     private List<MediaItem> mItemsList;
     private RecyclerView mRecyclerView;
     private PhotoAdapter mPhotoAdapter;
+    private ShowViewPagerListener mShowViewPagerListener
+
+    interface ShowViewPagerListener {
+        public void showViewPager(int position, String uriString);
+    }
+
+    public void setShowViewPagerListener(ShowViewPagerListener listener) {
+        mShowViewPagerListener = listener;
+    }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -78,6 +86,10 @@ public class PhotoFragment extends Fragment implements LoaderManager.LoaderCallb
 
     @Override
     public void onItemClick(View view, int position, String uriString) {
+        PhotoApplication.storeItemsToNext(mItemsList);
+        if (mShowViewPagerListener != null) {
+            mShowViewPagerListener.showViewPager(position, uriString);
+        }
 
     }
 

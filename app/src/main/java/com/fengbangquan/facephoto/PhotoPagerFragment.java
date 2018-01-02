@@ -19,10 +19,15 @@ public class PhotoPagerFragment extends Fragment {
 
     private ViewPager mViewPager;
     private List<MediaItem> mItemsList;
+    private int mCurrentPosition;
+    private String mCurrentUriString;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        Bundle bundle = getArguments();
+        mCurrentPosition = bundle.getInt("vPosition", 0);
+        mCurrentUriString = bundle.getString("vUriString");
     }
 
     @Nullable
@@ -31,6 +36,12 @@ public class PhotoPagerFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_photo_pager, container, false);
         mViewPager = view.findViewById(R.id.view_pager_photo);
         return view;
+    }
+
+    @Override
+    public void onActivityCreated(Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+
     }
 
     @Override
