@@ -27,7 +27,7 @@ public class PhotoFragment extends Fragment implements LoaderManager.LoaderCallb
     private List<MediaItem> mItemsList;
     private RecyclerView mRecyclerView;
     private PhotoAdapter mPhotoAdapter;
-    private ShowViewPagerListener mShowViewPagerListener
+    private ShowViewPagerListener mShowViewPagerListener;
 
     interface ShowViewPagerListener {
         public void showViewPager(int position, String uriString);

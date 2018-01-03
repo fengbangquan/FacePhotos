@@ -8,6 +8,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.fengbangquan.facephoto.adapter.PhotoPagerAdapter;
 import com.fengbangquan.facephoto.data.MediaItem;
 
 import java.util.List;
@@ -18,6 +19,7 @@ import java.util.List;
 public class PhotoPagerFragment extends Fragment {
 
     private ViewPager mViewPager;
+    private PhotoPagerAdapter mPhotoPagerAdapter;
     private List<MediaItem> mItemsList;
     private int mCurrentPosition;
     private String mCurrentUriString;
@@ -41,7 +43,9 @@ public class PhotoPagerFragment extends Fragment {
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-
+        mPhotoPagerAdapter = new PhotoPagerAdapter(getContext(), PhotoApplication.getStoredItemsList());
+        mViewPager.setAdapter(mPhotoPagerAdapter);
+        mViewPager.setCurrentItem(mCurrentPosition);
     }
 
     @Override
