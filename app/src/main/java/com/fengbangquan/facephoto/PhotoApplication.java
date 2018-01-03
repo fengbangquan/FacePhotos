@@ -11,23 +11,9 @@ import java.util.List;
  */
 public class PhotoApplication extends Application {
 
-    private static List<MediaItem> storedItemsList;
-
     @Override
     public void onCreate() {
         super.onCreate();
     }
 
-    public static void storeItemsToNext(List<MediaItem> list) {
-        if (storedItemsList != null) {
-            storedItemsList.clear();
-            storedItemsList = list;
-        } else {
-            storedItemsList = list;
-        }
-    }
-
-    public static List<MediaItem> getStoredItemsList() {
-        return storedItemsList;
-    }
 }

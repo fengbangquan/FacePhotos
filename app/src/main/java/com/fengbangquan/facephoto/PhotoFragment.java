@@ -56,6 +56,11 @@ public class PhotoFragment extends Fragment implements LoaderManager.LoaderCallb
         super.onViewCreated(view, savedInstanceState);
     }
 
+    @Override
+    public void onResume() {
+        System.out.println("PhotoFragment onResume");
+        super.onResume();
+    }
 
     @Override
     public void onDestroy() {
@@ -86,7 +91,6 @@ public class PhotoFragment extends Fragment implements LoaderManager.LoaderCallb
 
     @Override
     public void onItemClick(View view, int position, String uriString) {
-        PhotoApplication.storeItemsToNext(mItemsList);
         if (mShowViewPagerListener != null) {
             mShowViewPagerListener.showViewPager(position, uriString);
         }
