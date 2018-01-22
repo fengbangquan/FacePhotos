@@ -29,6 +29,10 @@ class RotationLayout extends FrameLayout {
         super(context, attrs, defStyle);
     }
 
+    public RotationLayout(Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes) {
+        super(context, attrs, defStyleAttr, defStyleRes);
+    }
+
     @Override
     protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
         if (mRotation == 1 || mRotation == 3) {
