@@ -30,9 +30,12 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".MapActivity">
+        <activity android:name=".BaiduMapActivity">
 
         </activity>
+        <service android:name=".utils.face.FaceDetectionService">
+
+        </service>
     </application>
 
 </manifest>
