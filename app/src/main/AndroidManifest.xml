@@ -33,7 +33,7 @@
         <activity android:name=".BaiduMapActivity">
 
         </activity>
-        <service android:name=".utils.face.FaceDetectionService">
+        <service android:name=".utils.faceutil.FaceDetectionService">
 
         </service>
     </application>

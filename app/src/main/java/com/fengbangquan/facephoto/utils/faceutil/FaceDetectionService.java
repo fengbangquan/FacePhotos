@@ -1,16 +1,17 @@
-package com.fengbangquan.facephoto.utils.face;
+package com.fengbangquan.facephoto.utils.faceutil;
 
 import android.app.IntentService;
 import android.content.Intent;
 import android.os.Handler;
 import android.os.Message;
 
+import com.fengbangquan.facephoto.utils.Constants;
+
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -38,9 +39,13 @@ public class FaceDetectionService extends IntentService {
     public final static String FACE_IMAGE_ID = "image_id";
     public final static String FACE_FACES = "faces";
 
-    private int MESSAGE_GET_FACES = 0x01;
-    private FaceHandler mFaceHandler;
+    private static Map<String, String> mFacesPathMap;
+    private static final int MESSAGE_DONE = 0x01;
+
+
     private OkHttpClient mOkHttpClient;
+    private FaceHandler mHandler;
+    private List<String> mPathList;
 
     /**
      * Creates an IntentService.  Invoked by your subclass's constructor.
@@ -57,21 +62,21 @@ public class FaceDetectionService extends IntentService {
     @Override
     public void onCreate() {
         super.onCreate();
-        mFaceHandler = new FaceHandler();
         mOkHttpClient = new OkHttpClient();
+        mHandler = new FaceHandler();
     }
 
     @Override
     protected void onHandleIntent(Intent intent) {
-        List<String> pathList = new ArrayList<>();
-        pathList = intent.getStringArrayListExtra("faces_path");
-        faceDetect("/storage/emulated/0/DCIM/Camera/IMG_1819.JPG");
-
+        mFacesPathMap = new HashMap<>();
+        mPathList = intent.getStringArrayListExtra(Constants.DETECTION_LIST);
+        for (int i = 0; i < mPathList.size(); i++) {
+            faceDetect(mPathList.get(i));
+        }
     }
 
     private void faceDetect(final String fileString) {
-
-        File file = new File(fileString);
+        final File file = new File(fileString);
         RequestBody fileBody = RequestBody.create(MultipartBody.FORM, file);
         RequestBody requestBody = new MultipartBody.Builder()
                 .setType(MultipartBody.FORM)
@@ -95,15 +100,13 @@ public class FaceDetectionService extends IntentService {
                 if (response.code() == 200) {
                     try {
                         JSONObject jsonObject = new JSONObject(response.body().string());
-                        int faces_count = jsonObject.getJSONArray(FACE_FACES).length();
-                        if (faces_count > 0) {
+                        int facesCount = jsonObject.getJSONArray(FACE_FACES).length();
+                        if (facesCount > 0) {
                             String image_id = jsonObject.getString(FACE_IMAGE_ID);
-                            Map<String, String> imagePathMap = new HashMap<>();
-                            imagePathMap.put(fileString, image_id);
-                            Message message = new Message();
-                            message.what = MESSAGE_GET_FACES;
-                            message.obj = imagePathMap;
-                            mFaceHandler.sendMessage(message);
+                            mFacesPathMap.put(fileString, image_id);
+                            if (fileString.equals(mPathList.get(mPathList.size() - 1))) {
+                                mHandler.sendEmptyMessage(MESSAGE_DONE);
+                            }
                         }
                     } catch (JSONException e) {
                         e.printStackTrace();
@@ -123,11 +126,19 @@ public class FaceDetectionService extends IntentService {
         @Override
         public void handleMessage(Message msg) {
             super.handleMessage(msg);
-            HashMap<String, String> map = (HashMap<String, String>) msg.obj;
-            for (Map.Entry<String, String> entry : map.entrySet()) {
-
+            switch (msg.what) {
+                case MESSAGE_DONE:
+                    try {
+                        FacesCacheUtil.updateFacesInCache(mFacesPathMap);
+                        mFacesPathMap.clear();
+                        mFacesPathMap = null;
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                    break;
+                default:
+                    break;
             }
-
         }
     }
 }
