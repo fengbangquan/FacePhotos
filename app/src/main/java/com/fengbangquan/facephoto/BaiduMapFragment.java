@@ -104,8 +104,8 @@ public class BaiduMapFragment extends Fragment implements LoaderManager.LoaderCa
         //为什么通过foreach遍历地图时缩放比例达到过大？
         for (int i = 0; i < mMediaItemsList.size(); i++) {
             item = mMediaItemsList.get(i);
-            if (item.getLatitude() != 0) {
-                mClusterList.add(new MapMarkerItem(new LatLng(item.getLatitude(), item.getLongitude())));
+            if (item.latitude() != 0) {
+                mClusterList.add(new MapMarkerItem(new LatLng(item.latitude(), item.longitude())));
             }
         }
         mClusterManager.addItems(mClusterList);

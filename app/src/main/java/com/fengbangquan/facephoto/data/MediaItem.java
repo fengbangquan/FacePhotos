@@ -9,7 +9,7 @@ import android.os.Parcelable;
  */
 public class MediaItem implements Parcelable {
     private int id;
-    private String uriString;
+    private String url;
     private String displayName;
     private String mimeType;
     private long size;
@@ -25,131 +25,86 @@ public class MediaItem implements Parcelable {
     private long duration;
     private int orientation;
 
-    public void setId(int id) {
-        this.id = id;
+    public MediaItem(Builder builder) {
+        this.id = builder.id;
+        this.url = builder.url;
+        this.displayName = builder.displayName;
+        this.mimeType = builder.mimeType;
+        this.size = builder.size;
+        this.latitude = builder.latitude;
+        this.longitude = builder.longitude;
+        this.dateTakenInMs = builder.dateTakenInMs;
+        this.dateAddedInSec = builder.dateAddedInSec;
+        this.filePath = builder.filePath;
+        this.bucketName = builder.bucketName;
+        this.bucketId = builder.bucketId;
+        this.width = builder.width;
+        this.height = builder.height;
+        this.duration = builder.duration;
+        this.orientation = builder.orientation;
     }
 
-    public int getId() {
+    public int id() {
         return this.id;
     }
 
-    public void setUriString(String uriString) {
-        this.uriString = uriString;
+    public String url() {
+        return this.url;
     }
 
-    public String getUriString() {
-        return this.uriString;
-    }
-
-    public void setDisplayName(String displayName) {
-        this.displayName = displayName;
-    }
-
-    public String getDisplayName() {
+    public String displayName() {
         return this.displayName;
     }
 
-    public void setMimeType(String mimeType) {
-        this.mimeType = mimeType;
-    }
-
-    public String getMimeType() {
+    public String mimeType() {
         return this.mimeType;
     }
 
-    public void setSize(long size) {
-        this.size = size;
-    }
-
-    public long getSize() {
+    public long size() {
         return this.size;
     }
 
-    public void setLatitude(double latitude) {
-        this.latitude = latitude;
-    }
-
-    public double getLatitude() {
+    public double latitude() {
         return this.latitude;
     }
 
-    public void setLongitude(double longitude) {
-        this.longitude = longitude;
-    }
-
-    public double getLongitude() {
+    public double longitude() {
         return this.longitude;
     }
 
-    public void setDateTakenInMs(long dateTakenInMs) {
-        this.dateTakenInMs = dateTakenInMs;
-    }
-
-    public long getDateTakenInMs() {
+    public long dateTakenInMs() {
         return this.dateTakenInMs;
     }
 
-    public void setDateAddedInSec(long dateAddedInSec) {
-        this.dateAddedInSec = dateAddedInSec;
-    }
-
-    public long getDateAddedInSec() {
+    public long dateAddedInSec() {
         return this.dateAddedInSec;
     }
 
-    public void setFilePath(String filePath) {
-        this.filePath = filePath;
-    }
-
-    public String getFilePath() {
+    public String filePath() {
         return this.filePath;
     }
 
-    public void setBucketName(String bucketName) {
-        this.bucketName = bucketName;
-    }
-
-    public String getBucketName() {
+    public String bucketName() {
         return this.bucketName;
     }
 
-    public void setBucketId(int bucketId) {
-        this.bucketId = bucketId;
-    }
-
-    public int getBucketId() {
+    public int bucketId() {
         return this.bucketId;
     }
 
-    public void setWidth(int width) {
-        this.width = width;
-    }
-
-    public int getWidth() {
+    public int width() {
         return this.width;
     }
 
-    public void setHeight(int height) {
-        this.height = height;
-    }
-
-    public int getHeight() {
+    public int height() {
         return this.height;
     }
 
-    public void setDuration(long duration) {
-        this.duration = duration;
-    }
-
-    public long getDuration() {
+    public long duration() {
         return this.duration;
     }
 
-    public void setOrientation(int orientation) {
-        this.orientation = orientation;
-    }
-
-    public int getOrientation() {
+    public int orientation() {
         return this.orientation;
     }
 
@@ -174,7 +129,7 @@ public class MediaItem implements Parcelable {
     @Override
     public void writeToParcel(Parcel dest, int flags) {
         dest.writeInt(this.id);
-        dest.writeString(this.uriString);
+        dest.writeString(this.url);
         dest.writeString(this.displayName);
         dest.writeString(this.mimeType);
         dest.writeLong(this.size);
@@ -196,7 +151,7 @@ public class MediaItem implements Parcelable {
 
     protected MediaItem(Parcel in) {
         this.id = in.readInt();
-        this.uriString = in.readString();
+        this.url = in.readString();
         this.displayName = in.readString();
         this.mimeType = in.readString();
         this.size = in.readLong();
@@ -224,4 +179,108 @@ public class MediaItem implements Parcelable {
             return new MediaItem[size];
         }
     };
+
+    public static class Builder {
+        int id;
+        String url;
+        String displayName;
+        String mimeType;
+        long size;
+        double latitude;
+        double longitude;
+        long dateTakenInMs;
+        long dateAddedInSec;
+        String filePath;
+        String bucketName;
+        int bucketId;
+        int width;
+        int height;
+        long duration;
+        int orientation;
+
+        public Builder id(int id) {
+            this.id = id;
+            return this;
+        }
+
+        public Builder url(String url) {
+            this.url = url;
+            return this;
+        }
+
+        public Builder displayName(String displayName) {
+            this.displayName = displayName;
+            return this;
+        }
+
+        public Builder mimeType(String mimeType) {
+            this.mimeType = mimeType;
+            return this;
+        }
+
+        public Builder size(long size) {
+            this.size = size;
+            return this;
+        }
+
+        public Builder latitude(double latitude) {
+            this.latitude = latitude;
+            return this;
+        }
+
+        public Builder longitude(double longitude) {
+            this.longitude = longitude;
+            return this;
+        }
+
+        public Builder dateTakenInMs(long dateTakenInMs) {
+            this.dateTakenInMs = dateTakenInMs;
+            return this;
+        }
+
+        public Builder dateAddedInSec(long dateAddedInSec) {
+            this.dateAddedInSec = dateAddedInSec;
+            return this;
+        }
+
+        public Builder filePath(String filePath) {
+            this.filePath = filePath;
+            return this;
+        }
+
+        public Builder bucketName(String bucketName) {
+            this.bucketName = bucketName;
+            return this;
+        }
+
+        public Builder bucketId(int bucketId) {
+            this.bucketId = bucketId;
+            return this;
+        }
+
+        public Builder width(int width) {
+            this.width = width;
+            return this;
+        }
+
+        public Builder height(int height) {
+            this.height = height;
+            return this;
+        }
+
+        public Builder duration(long duration) {
+            this.duration = duration;
+            return this;
+        }
+
+        public Builder orientation(int orientation) {
+            this.orientation = orientation;
+            return this;
+        }
+
+        public MediaItem build() {
+            if (filePath == null) throw new NullPointerException(" file path == null");
+            return new MediaItem(this);
+        }
+    }
 }

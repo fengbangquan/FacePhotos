@@ -5,27 +5,18 @@ import android.app.LoaderManager;
 import android.content.Loader;
 import android.os.Bundle;
 
-import com.baidu.location.BDAbstractLocationListener;
-import com.baidu.location.BDLocation;
 import com.baidu.location.LocationClient;
-import com.baidu.location.LocationClientOption;
 import com.baidu.mapapi.map.BaiduMap;
-import com.baidu.mapapi.map.MapStatusUpdate;
 import com.baidu.mapapi.map.MapStatusUpdateFactory;
 import com.baidu.mapapi.map.MapView;
-import com.baidu.mapapi.map.Marker;
-import com.baidu.mapapi.map.MyLocationData;
 import com.baidu.mapapi.model.LatLng;
 import com.baidu.mapapi.model.LatLngBounds;
 import com.fengbangquan.facephoto.data.MapMarkerItem;
 import com.fengbangquan.facephoto.data.MediaItem;
 import com.fengbangquan.facephoto.data.MediaLoader;
-import com.fengbangquan.facephoto.utils.clusterutil.MarkerManager;
 import com.fengbangquan.facephoto.utils.clusterutil.clustering.ClusterManager;
 
 import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Iterator;
 import java.util.List;
 
 /**
@@ -63,12 +54,12 @@ public class BaiduMapActivity extends Activity implements LoaderManager.LoaderCa
 //            @Override
 //            public void onReceiveLocation(BDLocation bdLocation) {
 //                MyLocationData locData = new MyLocationData.Builder()
-//                        .direction(100).latitude(bdLocation.getLatitude())
-//                        .longitude(bdLocation.getLongitude()).build();
+//                        .direction(100).latitude(bdLocation.latitude())
+//                        .longitude(bdLocation.longitude()).build();
 //                //设置图标在地图上的位置
 //                mBaiduMap.setMyLocationData(locData);
 //                // 开始移动百度地图的定位地点到中心位置
-//                 LatLng ll = new LatLng(bdLocation.getLatitude(), bdLocation.getLongitude());
+//                 LatLng ll = new LatLng(bdLocation.latitude(), bdLocation.longitude());
 //                 MapStatusUpdate u = MapStatusUpdateFactory.newLatLng(ll);
 //                 mBaiduMap.animateMapStatus(u);
 //            }
@@ -108,8 +99,8 @@ public class BaiduMapActivity extends Activity implements LoaderManager.LoaderCa
         /*为什么通过foreach遍历地图时缩放比例达到过大？*/
         for (int i = 0; i < itemList.size(); i++) {
             item = itemList.get(i);
-            if (item.getLatitude() != 0) {
-                mClusterList.add(new MapMarkerItem(new LatLng(item.getLatitude(), item.getLongitude())));
+            if (item.latitude() != 0) {
+                mClusterList.add(new MapMarkerItem(new LatLng(item.latitude(), item.longitude())));
             }
         }
         mClusterManager.addItems(mClusterList);

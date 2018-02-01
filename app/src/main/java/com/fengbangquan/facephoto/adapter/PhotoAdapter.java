@@ -53,7 +53,7 @@ public class PhotoAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
         ImageView imageView = ((ImageViewHolder) holder).imageView;
         final int itemPosition = position;
-        final String uriString = mMediaItemList.get(position).getUriString();
+        final String uriString = mMediaItemList.get(position).url();
         Glide
             .with(mContext)
             .load(uriString)

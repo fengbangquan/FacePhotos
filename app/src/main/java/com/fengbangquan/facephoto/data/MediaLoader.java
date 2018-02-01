@@ -84,22 +84,22 @@ public class MediaLoader extends AsyncTaskLoader<List<MediaItem>> {
         if (imageCursor != null) {
             try {
                 while (imageCursor.moveToNext()) {
-                    MediaItem imageItem = new MediaItem();
                     int id = imageCursor.getInt(imageCursor.getColumnIndex(PROJECTION_IMAGES[0]));
-                    imageItem.setId(id);
-                    imageItem.setUriString(CONTENT_URI + "/" + id);
-                    imageItem.setFilePath(imageCursor.getString(imageCursor.getColumnIndex(PROJECTION_IMAGES[1])));
-                    imageItem.setDisplayName(imageCursor.getString(imageCursor.getColumnIndex(PROJECTION_IMAGES[2])));
-                    imageItem.setBucketId(imageCursor.getInt(imageCursor.getColumnIndex(PROJECTION_IMAGES[3])));
-                    imageItem.setBucketName(imageCursor.getString(imageCursor.getColumnIndex(PROJECTION_IMAGES[4])));
-                    imageItem.setMimeType(imageCursor.getString(imageCursor.getColumnIndex(PROJECTION_IMAGES[5])));
-                    imageItem.setDateAddedInSec(imageCursor.getLong(imageCursor.getColumnIndex(PROJECTION_IMAGES[6])));
-                    imageItem.setDateTakenInMs(imageCursor.getLong(imageCursor.getColumnIndex(PROJECTION_IMAGES[7])));
-                    imageItem.setLatitude(imageCursor.getDouble(imageCursor.getColumnIndex(PROJECTION_IMAGES[8])));
-                    imageItem.setLongitude(imageCursor.getDouble(imageCursor.getColumnIndex(PROJECTION_IMAGES[9])));
-                    imageItem.setSize(imageCursor.getLong(imageCursor.getColumnIndex(PROJECTION_IMAGES[10])));
-                    imageItem.setOrientation(imageCursor.getInt(imageCursor.getColumnIndex(PROJECTION_IMAGES[11])));
-                    imageItemList.add(imageItem);
+                    MediaItem.Builder imageBuilder = new MediaItem.Builder()
+                            .id(id)
+                            .url(CONTENT_URI + "/" + id)
+                            .filePath(imageCursor.getString(imageCursor.getColumnIndex(PROJECTION_IMAGES[1])))
+                            .displayName(imageCursor.getString(imageCursor.getColumnIndex(PROJECTION_IMAGES[2])))
+                            .bucketId(imageCursor.getInt(imageCursor.getColumnIndex(PROJECTION_IMAGES[3])))
+                            .bucketName(imageCursor.getString(imageCursor.getColumnIndex(PROJECTION_IMAGES[4])))
+                            .mimeType(imageCursor.getString(imageCursor.getColumnIndex(PROJECTION_IMAGES[5])))
+                            .dateAddedInSec(imageCursor.getLong(imageCursor.getColumnIndex(PROJECTION_IMAGES[6])))
+                            .dateTakenInMs(imageCursor.getLong(imageCursor.getColumnIndex(PROJECTION_IMAGES[7])))
+                            .latitude(imageCursor.getDouble(imageCursor.getColumnIndex(PROJECTION_IMAGES[8])))
+                            .longitude(imageCursor.getDouble(imageCursor.getColumnIndex(PROJECTION_IMAGES[9])))
+                            .size(imageCursor.getLong(imageCursor.getColumnIndex(PROJECTION_IMAGES[10])))
+                            .orientation(imageCursor.getInt(imageCursor.getColumnIndex(PROJECTION_IMAGES[11])));
+                    imageItemList.add(imageBuilder.build());
                 }
                 imageCursor.close();
             } catch (Exception e) {
@@ -124,22 +124,22 @@ public class MediaLoader extends AsyncTaskLoader<List<MediaItem>> {
         if (videoCursor != null) {
             try {
                 while (videoCursor.moveToNext()) {
-                    MediaItem videoItem = new MediaItem();
                     int id = videoCursor.getInt(videoCursor.getColumnIndex(PROJECTION_VIDEOS[0]));
-                    videoItem.setId(id);
-                    videoItem.setUriString(CONTENT_URI + "/" + id);
-                    videoItem.setFilePath(videoCursor.getString(videoCursor.getColumnIndex(PROJECTION_VIDEOS[1])));
-                    videoItem.setDisplayName(videoCursor.getString(videoCursor.getColumnIndex(PROJECTION_VIDEOS[2])));
-                    videoItem.setBucketId(videoCursor.getInt(videoCursor.getColumnIndex(PROJECTION_VIDEOS[3])));
-                    videoItem.setBucketName(videoCursor.getString(videoCursor.getColumnIndex(PROJECTION_VIDEOS[4])));
-                    videoItem.setMimeType(videoCursor.getString(videoCursor.getColumnIndex(PROJECTION_VIDEOS[5])));
-                    videoItem.setDateAddedInSec(videoCursor.getLong(videoCursor.getColumnIndex(PROJECTION_VIDEOS[6])));
-                    videoItem.setDateTakenInMs(videoCursor.getLong(videoCursor.getColumnIndex(PROJECTION_VIDEOS[7])));
-                    videoItem.setLatitude(videoCursor.getDouble(videoCursor.getColumnIndex(PROJECTION_VIDEOS[8])));
-                    videoItem.setLongitude(videoCursor.getDouble(videoCursor.getColumnIndex(PROJECTION_VIDEOS[9])));
-                    videoItem.setSize(videoCursor.getLong(videoCursor.getColumnIndex(PROJECTION_VIDEOS[10])));
-                    videoItem.setDuration(videoCursor.getLong(videoCursor.getColumnIndex(PROJECTION_VIDEOS[11])));
-                    videoItemList.add(videoItem);
+                    MediaItem.Builder videoBuilder = new MediaItem.Builder()
+                            .id(id)
+                            .url(CONTENT_URI + "/" + id)
+                            .filePath(videoCursor.getString(videoCursor.getColumnIndex(PROJECTION_VIDEOS[1])))
+                            .displayName(videoCursor.getString(videoCursor.getColumnIndex(PROJECTION_VIDEOS[2])))
+                            .bucketId(videoCursor.getInt(videoCursor.getColumnIndex(PROJECTION_VIDEOS[3])))
+                            .bucketName(videoCursor.getString(videoCursor.getColumnIndex(PROJECTION_VIDEOS[4])))
+                            .mimeType(videoCursor.getString(videoCursor.getColumnIndex(PROJECTION_VIDEOS[5])))
+                            .dateAddedInSec(videoCursor.getLong(videoCursor.getColumnIndex(PROJECTION_VIDEOS[6])))
+                            .dateTakenInMs(videoCursor.getLong(videoCursor.getColumnIndex(PROJECTION_VIDEOS[7])))
+                            .latitude(videoCursor.getDouble(videoCursor.getColumnIndex(PROJECTION_VIDEOS[8])))
+                            .longitude(videoCursor.getDouble(videoCursor.getColumnIndex(PROJECTION_VIDEOS[9])))
+                            .size(videoCursor.getLong(videoCursor.getColumnIndex(PROJECTION_VIDEOS[10])))
+                            .duration(videoCursor.getLong(videoCursor.getColumnIndex(PROJECTION_VIDEOS[11])));
+                    videoItemList.add(videoBuilder.build());
                 }
                 videoCursor.close();
             } catch (Exception e) {

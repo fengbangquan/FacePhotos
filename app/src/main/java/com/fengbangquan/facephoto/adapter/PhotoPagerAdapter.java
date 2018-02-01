@@ -47,7 +47,7 @@ public class PhotoPagerAdapter extends PagerAdapter {
         ImageView imageView = view.findViewById(R.id.item_view_pager);
         Glide
             .with(mConText)
-            .load(mMediaItemList.get(position).getUriString())
+            .load(mMediaItemList.get(position).url())
             .apply(RequestOptions.placeholderOf(R.drawable.empty_photo))
             .into(imageView);
         container.addView(view);
