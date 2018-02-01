@@ -30,6 +30,7 @@ import okhttp3.Response;
 public class FaceDetectionService extends IntentService {
     public final static String FACE_API_KEY_VALUE = "lkW14rDTiqwNiPnzs8JNy8aqxxY9KUsi";
     public final static String FACE_API_SECRET_VALUE = "jxHtMc6pb_4PsBNuQtR2m6Unw-evYh6W";
+    public final static String FACE_OUTER_ID_VALUE = "test";
     public final static String FACE_SEARCH_URL = "https://api-cn.faceplusplus.com/facepp/v3/search";
     public final static String FACE_API_KEY = "api_key";
     public final static String FACE_API_SECRET = "api_secret";
@@ -75,15 +76,15 @@ public class FaceDetectionService extends IntentService {
         }
     }
 
-    private void faceDetect(final String fileString) {
-        final File file = new File(fileString);
+    private void faceDetect(final String path) {
+        final File file = new File(path);
         RequestBody fileBody = RequestBody.create(MultipartBody.FORM, file);
         RequestBody requestBody = new MultipartBody.Builder()
                 .setType(MultipartBody.FORM)
                 .addFormDataPart(FACE_API_KEY, FACE_API_KEY_VALUE)
                 .addFormDataPart(FACE_API_SECRET, FACE_API_SECRET_VALUE)
                 .addFormDataPart(FACE_IMAGE_FILE, file.getName(), fileBody)
-                .addFormDataPart(FACE_OUTER_ID, "test")
+                .addFormDataPart(FACE_OUTER_ID, FACE_OUTER_ID_VALUE)
                 .build();
         Request request = new Request.Builder()
                 .url(FACE_SEARCH_URL)
@@ -92,24 +93,27 @@ public class FaceDetectionService extends IntentService {
         mOkHttpClient.newCall(request).enqueue(new Callback() {
             @Override
             public void onFailure(Call call, IOException e) {
-
+                if (path.equals(mPathList.get(mPathList.size() - 1))) {
+                    mHandler.sendEmptyMessage(MESSAGE_DONE);
+                }
             }
 
             @Override
             public void onResponse(Call call, Response response) throws IOException {
-                if (response.code() == 200) {
-                    try {
+                try {
+                    if (response.code() == 200) {
                         JSONObject jsonObject = new JSONObject(response.body().string());
                         int facesCount = jsonObject.getJSONArray(FACE_FACES).length();
                         if (facesCount > 0) {
                             String image_id = jsonObject.getString(FACE_IMAGE_ID);
-                            mFacesPathMap.put(fileString, image_id);
-                            if (fileString.equals(mPathList.get(mPathList.size() - 1))) {
-                                mHandler.sendEmptyMessage(MESSAGE_DONE);
-                            }
+                            mFacesPathMap.put(path, image_id);
                         }
-                    } catch (JSONException e) {
-                        e.printStackTrace();
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                } finally {
+                    if (path.equals(mPathList.get(mPathList.size() - 1))) {
+                        mHandler.sendEmptyMessage(MESSAGE_DONE);
                     }
                 }
             }
@@ -120,6 +124,7 @@ public class FaceDetectionService extends IntentService {
     @Override
     public void onDestroy() {
         super.onDestroy();
+        mHandler.removeMessages(MESSAGE_DONE);
     }
 
     static class FaceHandler extends Handler {
