@@ -26,6 +26,7 @@ public class Mainfragment extends Fragment implements LoaderManager.LoaderCallba
     
     private MainAdapter mMainAdapter;
     private RecyclerView mMainView;
+    private List<MediaItem> mItemsList;
     private List<String> mImageList;
     
     @Override
@@ -78,11 +79,13 @@ public class Mainfragment extends Fragment implements LoaderManager.LoaderCallba
 
     @Override
     public void onLoadFinished(Loader<List<MediaItem>> loader, List<MediaItem> data) {
+        mItemsList = data;
         mImageList = new ArrayList<>();
-        mMainView.setAdapter(new MainAdapter(getContext(), data));
-        for (int i = 0; i < data.size(); i++) {
-            if (data.get(i).duration() == 0) {
-                mImageList.add(data.get(i).filePath());
+        mMainAdapter = new MainAdapter(getContext(), mItemsList, 0);
+        mMainView.setAdapter(mMainAdapter);
+        for (int i = 0; i < mItemsList.size(); i++) {
+            if (mItemsList.get(i).duration() == 0) {
+                mImageList.add(mItemsList.get(i).filePath());
             }
         }
         if (mImageList.size() > 0) {

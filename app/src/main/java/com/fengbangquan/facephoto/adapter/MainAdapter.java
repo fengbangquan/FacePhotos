@@ -16,7 +16,7 @@ public class MainAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
     private Context mContext;
     private List<MediaItem> mItemList;
-    public MainAdapter(Context context, List<MediaItem> list) {
+    public MainAdapter(Context context, List<MediaItem> list, int FacesCounts) {
         mContext = context.getApplicationContext();
         mItemList = list;
     }
