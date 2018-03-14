@@ -42,4 +42,7 @@ public class FacesCacheUtil {
         Cache.put(FACES_PATH, cacheJson.toString());
     }
 
+    public static int getFacesCount() throws JSONException {
+        return getFacesFromCache().length();
+    }
 }

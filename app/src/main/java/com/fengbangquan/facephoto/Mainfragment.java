@@ -81,7 +81,7 @@ public class Mainfragment extends Fragment implements LoaderManager.LoaderCallba
     public void onLoadFinished(Loader<List<MediaItem>> loader, List<MediaItem> data) {
         mItemsList = data;
         mImageList = new ArrayList<>();
-        mMainAdapter = new MainAdapter(getContext(), mItemsList, 0);
+        mMainAdapter = new MainAdapter(getContext(), mItemsList);
         mMainView.setAdapter(mMainAdapter);
         for (int i = 0; i < mItemsList.size(); i++) {
             if (mItemsList.get(i).duration() == 0) {
